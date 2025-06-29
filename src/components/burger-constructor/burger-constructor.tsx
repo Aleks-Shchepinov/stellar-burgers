@@ -3,7 +3,6 @@ import { TConstructorIngredient } from '@utils-types';
 import { BurgerConstructorUI } from '@ui';
 import { useDispatch, useSelector } from '../../services/store';
 import {
-  selectIngredients,
   selectOrderIsLoading,
   selectOrderData,
   selectConstructorItems,
@@ -15,6 +14,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 export const BurgerConstructor: FC = () => {
   const { bun, ingredients = [] } = useSelector(selectConstructorItems);
+  console.log('Constructor bun:', bun, 'ingredients:', ingredients);
   const orderRequest = useSelector(selectOrderIsLoading);
   const orderModalData = useSelector(selectOrderData);
   const isAuthChecked = useSelector(selectisAuthChecked);

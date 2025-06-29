@@ -1,9 +1,4 @@
-import {
-  configureStore,
-  combineReducers,
-  ThunkAction,
-  Action
-} from '@reduxjs/toolkit';
+import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import {
   TypedUseSelectorHook,
   useDispatch as dispatchHook,
@@ -13,20 +8,37 @@ import authReducer from './slices/AuthSlice';
 import ingredientsReducer from './slices/ingrediensSlice';
 import ordersReducer from './slices/orderSlice';
 import feedsReducer from './slices/feedSlice';
-import { constructorReducer } from './slices/constructorBurgerSlice';
+// import constructorReducer from './slices/constructorBurgerSlice';
+import constructorBurgerReducer from './slices/constructorSlice';
 
 export const rootReducer = combineReducers({
   auth: authReducer,
   ingredients: ingredientsReducer,
   orders: ordersReducer,
   feeds: feedsReducer,
-  constructor: constructorReducer
+  constructor: constructorBurgerReducer
 });
 
 const store = configureStore({
   reducer: rootReducer,
   devTools: process.env.NODE_ENV !== 'production'
 });
+// const store = configureStore({
+//   reducer: {
+//     auth: authReducer,
+//     ingredients: ingredientsReducer,
+//     orders: ordersReducer,
+//     feeds: feedsReducer,
+//     constructor: constructorReducer
+//   },
+//   middleware: (getDefaultMiddleware) =>
+//     getDefaultMiddleware({
+//       serializableCheck: {
+//         ignoredPaths: ['constructor'] // временно игнорируем для диагностики
+//       }
+//     }),
+//   devTools: process.env.NODE_ENV !== 'production'
+// });
 
 export type RootState = ReturnType<typeof rootReducer>;
 

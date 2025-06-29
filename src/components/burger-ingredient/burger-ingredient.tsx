@@ -3,15 +3,13 @@ import { useLocation } from 'react-router-dom';
 import { useDispatch } from '../../services/store';
 import { BurgerIngredientUI } from '@ui';
 import { TBurgerIngredientProps } from './type';
-import {
-  addBun,
-  addIngredient
-} from '../../services/slices/constructorBurgerSlice';
+import { addBun, addIngredient } from '../../services/slices/constructorSlice';
 
 export const BurgerIngredient: FC<TBurgerIngredientProps> = memo(
   ({ ingredient, count }) => {
     const location = useLocation();
     const dispatch = useDispatch();
+    console.log('Тут лежит ingredient:', ingredient);
 
     const handleAdd = () => {
       if (ingredient.type === 'bun') {

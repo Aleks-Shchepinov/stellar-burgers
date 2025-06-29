@@ -3,19 +3,16 @@ import { useInView } from 'react-intersection-observer';
 import { useSelector } from '../../services/store';
 import { TTabMode } from '@utils-types';
 import { BurgerIngredientsUI } from '../ui/burger-ingredients';
-import {
-  selectIngredientsData,
-  selectBuns,
-  selectMains,
-  selectSauces
-} from '@selectors';
+import { selectBuns, selectMains, selectSauces } from '@selectors';
+import { RootState } from '../../services/store';
 
 export const BurgerIngredients: FC = () => {
   /** TODO: взять переменные из стора */
-  const ingredientsData = useSelector(selectIngredientsData);
   const buns = useSelector(selectBuns);
   const mains = useSelector(selectMains);
   const sauces = useSelector(selectSauces);
+  const { constructor } = useSelector((state: RootState) => state);
+  console.log('Constructor state:', constructor);
 
   const [currentTab, setCurrentTab] = useState<TTabMode>('bun');
   const titleBunRef = useRef<HTMLHeadingElement>(null);

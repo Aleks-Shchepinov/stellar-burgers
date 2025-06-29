@@ -1,6 +1,6 @@
 import { TIngredient } from '@utils-types';
+import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from './store';
-import { Root } from 'react-dom/client';
 
 export const selectIngredients = (state: RootState) => state.ingredients.items;
 export const selectOrderIsLoading = (state: RootState) => state.orders.loading;
@@ -23,12 +23,18 @@ export const selectIngredientCount =
 export const selectIngredientsData = (state: RootState) => {
   state.ingredients;
 };
-export const selectBuns = (state: RootState) =>
-  state.ingredients.items.filter((item: TIngredient) => item.type === 'bun');
-export const selectMains = (state: RootState) =>
-  state.ingredients.items.filter((item: TIngredient) => item.type === 'main');
-export const selectSauces = (state: RootState) =>
-  state.ingredients.items.filter((item) => item.type === 'sauce');
+
+export const selectBuns = createSelector([selectIngredients], (items) =>
+  items.filter((item) => item.type === 'bun')
+);
+
+export const selectMains = createSelector([selectIngredients], (items) =>
+  items.filter((item) => item.type === 'main')
+);
+
+export const selectSauces = createSelector([selectIngredients], (items) =>
+  items.filter((item) => item.type === 'sauce')
+);
 
 export const selectFeeds = (state: RootState) => state.feeds;
 

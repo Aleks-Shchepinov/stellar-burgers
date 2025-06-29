@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TIngredient, TConstructorIngredient } from '../../utils/types';
-
+//НОВЫЙ
 type TConstructorState = {
   bun: TIngredient | null;
   ingredients: TConstructorIngredient[];
@@ -11,8 +11,8 @@ const initialState: TConstructorState = {
   ingredients: []
 };
 
-const constructorSlice = createSlice({
-  name: 'constructor',
+const constructorBurgerSlice = createSlice({
+  name: 'constructorBurger',
   initialState,
   reducers: {
     addBun: (state, action: PayloadAction<TIngredient>) => {
@@ -20,15 +20,12 @@ const constructorSlice = createSlice({
       state.bun = action.payload;
     },
     addIngredient: (state, action: PayloadAction<TIngredient>) => {
-      if (!state.ingredients) {
-        console.error('State.ingredients is undefined! Current state:', state);
-        state.ingredients = [];
-      }
-
-      state.ingredients.push({
+      const newIngredient: TConstructorIngredient = {
         ...action.payload,
         id: `${action.payload._id}-${Date.now()}`
-      });
+      };
+      console.log('Тут лежит newIngredient:', newIngredient);
+      state.ingredients.push(newIngredient);
     },
     removeIngredient: (state, action: PayloadAction<string>) => {
       state.ingredients = state.ingredients.filter(
@@ -53,9 +50,11 @@ const constructorSlice = createSlice({
         ];
       }
     },
-    clearConstructor: () => initialState
+    clearConstructor: () => ({ ...initialState })
   }
 });
+
+export default constructorBurgerSlice.reducer;
 
 export const {
   addBun,
@@ -64,6 +63,4 @@ export const {
   moveIngredientUp,
   moveIngredientDown,
   clearConstructor
-} = constructorSlice.actions;
-
-export const constructorReducer = constructorSlice.reducer;
+} = constructorBurgerSlice.actions;
