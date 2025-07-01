@@ -11,6 +11,7 @@ import {
   TRegisterData,
   TLoginData
 } from '../../utils/burger-api';
+import { deleteCookie, setCookie } from '../../utils/cookie';
 
 type TAuthState = {
   user: TUser | null;
@@ -78,6 +79,8 @@ const authSlice = createSlice({
       })
       .addCase(registerUser.fulfilled, (state, action) => {
         state.user = action.payload.user;
+        localStorage.setItem('refreshToken', action.payload.refreshToken);
+        setCookie('accessToken', action.payload.accessToken);
         state.loading = false;
       })
       .addCase(registerUser.rejected, (state, action) => {
@@ -91,6 +94,8 @@ const authSlice = createSlice({
       .addCase(loginUser.fulfilled, (state, action) => {
         state.user = action.payload.user;
         state.loading = false;
+        localStorage.setItem('refreshToken', action.payload.refreshToken);
+        setCookie('accessToken', action.payload.accessToken);
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
@@ -102,6 +107,8 @@ const authSlice = createSlice({
       })
       .addCase(logoutUser.fulfilled, (state) => {
         state.user = null;
+        localStorage.removeItem('refreshToken');
+        deleteCookie('accessToken');
         state.loading = false;
       })
       .addCase(logoutUser.rejected, (state, action) => {

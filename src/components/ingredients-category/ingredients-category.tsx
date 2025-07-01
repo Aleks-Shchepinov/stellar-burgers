@@ -1,6 +1,6 @@
 import { forwardRef, useMemo } from 'react';
 import { TIngredientsCategoryProps } from './type';
-import { TIngredient, TConstructorIngredient } from '@utils-types';
+import { TConstructorIngredient } from '@utils-types';
 import { IngredientsCategoryUI } from '../ui/ingredients-category';
 import { selectConstructorItems } from '../../services/selectors';
 import { useSelector } from '../../services/store';

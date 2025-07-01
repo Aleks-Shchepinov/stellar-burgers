@@ -1,45 +1,23 @@
-import { TIngredient } from '@utils-types';
-import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from './store';
 
 export const selectIngredients = (state: RootState) => state.ingredients.items;
+export const selectCurrentIngredient = (state: RootState) =>
+  state.ingredients.currentIngredient;
+export const selectIngredientsLoading = (state: RootState) =>
+  state.ingredients.loading;
+export const selectUserOrders = (state: RootState) => state.orders.userOrders;
 export const selectOrderIsLoading = (state: RootState) => state.orders.loading;
 export const selectOrderData = (state: RootState) => state.orders.currentOrder;
 
-export const selectConstructorItems = (state: RootState) => state.constructor;
-export const selectConstructorBun = (state: RootState) => state.constructor.bun;
-export const selectConstructorIngredients = (state: RootState) =>
-  state.constructor.ingredients;
-
-export const selectIngredientCount =
-  (ingredientId: string) => (state: RootState) => {
-    const { bun, ingredients } = state.constructor;
-
-    if (bun?._id === ingredientId) return 2;
-
-    return ingredients.filter((item) => item._id === ingredientId).length;
-  };
-
-export const selectIngredientsData = (state: RootState) => {
-  state.ingredients;
-};
-
-export const selectBuns = createSelector([selectIngredients], (items) =>
-  items.filter((item) => item.type === 'bun')
-);
-
-export const selectMains = createSelector([selectIngredients], (items) =>
-  items.filter((item) => item.type === 'main')
-);
-
-export const selectSauces = createSelector([selectIngredients], (items) =>
-  items.filter((item) => item.type === 'sauce')
-);
+export const selectConstructorItems = (state: RootState) =>
+  state.constructorBurger;
 
 export const selectFeeds = (state: RootState) => state.feeds;
+export const selectFeedsOrders = (state: RootState) => state.feeds.orders;
+export const selectFeedsIsLoading = (state: RootState) => state.feeds.loading;
 
-export const selectCurrentIngredient = (state: RootState) =>
-  state.ingredients.currentIngredient;
-
-export const selectisAuthChecked = (state: RootState) =>
+export const selectIsAuthChecked = (state: RootState) =>
   state.auth.isAuthChecked;
+export const selectUser = (state: RootState) => state.auth.user;
+export const selectUserIsLoading = (state: RootState) => state.auth.loading;
+export const selectUserError = (state: RootState) => state.auth.error;

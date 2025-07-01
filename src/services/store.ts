@@ -8,7 +8,6 @@ import authReducer from './slices/AuthSlice';
 import ingredientsReducer from './slices/ingrediensSlice';
 import ordersReducer from './slices/orderSlice';
 import feedsReducer from './slices/feedSlice';
-// import constructorReducer from './slices/constructorBurgerSlice';
 import constructorBurgerReducer from './slices/constructorSlice';
 
 export const rootReducer = combineReducers({
@@ -16,29 +15,13 @@ export const rootReducer = combineReducers({
   ingredients: ingredientsReducer,
   orders: ordersReducer,
   feeds: feedsReducer,
-  constructor: constructorBurgerReducer
+  constructorBurger: constructorBurgerReducer
 });
 
 const store = configureStore({
   reducer: rootReducer,
   devTools: process.env.NODE_ENV !== 'production'
 });
-// const store = configureStore({
-//   reducer: {
-//     auth: authReducer,
-//     ingredients: ingredientsReducer,
-//     orders: ordersReducer,
-//     feeds: feedsReducer,
-//     constructor: constructorReducer
-//   },
-//   middleware: (getDefaultMiddleware) =>
-//     getDefaultMiddleware({
-//       serializableCheck: {
-//         ignoredPaths: ['constructor'] // временно игнорируем для диагностики
-//       }
-//     }),
-//   devTools: process.env.NODE_ENV !== 'production'
-// });
 
 export type RootState = ReturnType<typeof rootReducer>;
 
