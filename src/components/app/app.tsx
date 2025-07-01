@@ -1,4 +1,4 @@
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import {
   AppHeader,
   ProtectedRoute,
@@ -26,6 +26,8 @@ import { useDispatch } from '../../services/store';
 
 const App = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const background = location.state?.background;
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -36,7 +38,7 @@ const App = () => {
   return (
     <div className={styles.app}>
       <AppHeader />
-      <Routes>
+      <Routes location={background || location}>
         <Route path='/' element={<ConstructorPage />} />
         <Route path='/feed' element={<Feed />} />
         <Route
@@ -87,35 +89,40 @@ const App = () => {
             </ProtectedRoute>
           }
         />
+        <Route path='/ingredients/:id' element={<IngredientDetails />} />
+        <Route path='/feed/:number' element={<OrderInfo />} />
+        <Route path='/profile/orders/:number' element={<OrderInfo />} />
         <Route path='*' element={<NotFound404 />} />
-        <Route
-          path='/feed/:number'
-          element={
-            <Modal title={'Детали заказа'} onClose={() => navigate('/feed')}>
-              <OrderInfo />
-            </Modal>
-          }
-        />
-        <Route
-          path='/ingredients/:id'
-          element={
-            <Modal title={'Детали ингредиента'} onClose={() => navigate('/')}>
-              <IngredientDetails />
-            </Modal>
-          }
-        />
-        <Route
-          path='/profile/orders/:number'
-          element={
-            <Modal
-              title={'Детали заказа'}
-              onClose={() => navigate('/profile/orders/')}
-            >
-              <OrderInfo />
-            </Modal>
-          }
-        />
       </Routes>
+
+      {background && (
+        <Routes>
+          <Route
+            path='/feed/:number'
+            element={
+              <Modal title={'Детали заказа'} onClose={() => navigate(-1)}>
+                <OrderInfo />
+              </Modal>
+            }
+          />
+          <Route
+            path='/ingredients/:id'
+            element={
+              <Modal title={'Детали ингредиента'} onClose={() => navigate(-1)}>
+                <IngredientDetails />
+              </Modal>
+            }
+          />
+          <Route
+            path='/profile/orders/:number'
+            element={
+              <Modal title={'Детали заказа'} onClose={() => navigate(-1)}>
+                <OrderInfo />
+              </Modal>
+            }
+          />
+        </Routes>
+      )}
     </div>
   );
 };
